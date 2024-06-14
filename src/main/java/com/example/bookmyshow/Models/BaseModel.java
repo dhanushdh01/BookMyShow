@@ -3,11 +3,16 @@ package com.example.bookmyshow.Models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
+
 @Getter
 @Setter
-public class BaseModel {
-    private Long id;
-    private Date createAt;
-    private Date modifiedAt;
+public abstract class BaseModel {
+    private int id;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private boolean isDeleted;
+    private String createdBy;
+    private String updatedBy;
 }

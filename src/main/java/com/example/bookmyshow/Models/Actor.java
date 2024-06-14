@@ -1,12 +1,16 @@
 package com.example.bookmyshow.Models;
 
+
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
 @Getter
 @Setter
-public class Region extends BaseModel {
+@Entity
+public class Actor extends BaseModel {
     private String name;
-    private List<Theatre> theatres;
+    private List<Movie> movies;
 }

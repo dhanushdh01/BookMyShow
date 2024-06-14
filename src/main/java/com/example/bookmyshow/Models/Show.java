@@ -1,16 +1,21 @@
 package com.example.bookmyshow.Models;
 
+import com.example.bookmyshow.Models.Constant.MovieFeature;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
+
+@Entity
 @Getter
 @Setter
 public class Show extends BaseModel {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private Movie movie;
-    private Date startTime;
-    private Date endTime;
-    private Screen screen;
-    private List<Feature> features;
+    private Auditorium auditorium;
+    private List<ShowSeat> showSeats;
+    private List<MovieFeature> movieFeatures;
 }

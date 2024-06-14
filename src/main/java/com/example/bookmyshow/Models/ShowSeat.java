@@ -1,14 +1,26 @@
 package com.example.bookmyshow.Models;
 
+import com.example.bookmyshow.Models.Constant.ShowSeatStatus;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+@Entity
 @Getter
 @Setter
-public class ShowSeat extends BaseModel{
+public class ShowSeat extends BaseModel {
+    private int price;
     private Show show;
     private Seat seat;
     private ShowSeatStatus showSeatStatus;
-    private Date blockedAt;
+
+    public ShowSeat() {
+    }
+
+    public ShowSeat(int price, Show show, Seat seat, ShowSeatStatus showSeatStatus) {
+        this.price = price;
+        this.show = show;
+        this.seat = seat;
+        this.showSeatStatus = showSeatStatus;
+    }
 }
