@@ -42,4 +42,9 @@ public class TicketService {
         return true;
     }
 
+    public Ticket getTicketById(int ticketId){
+        // Fetch Ticket from DB
+        return new Ticket();
+    }
+
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -20,4 +22,5 @@ public class Theatre extends BaseModel {
         this.address = address;
         this.city = city;
     }
+    private List<Auditorium> auditoriums;
 }
