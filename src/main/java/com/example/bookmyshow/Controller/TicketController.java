@@ -1,29 +1,31 @@
 package com.example.bookmyshow.Controller;
 
 import com.example.bookmyshow.DTO.BookTicketRequestDTO;
-import com.example.bookmyshow.Models.Ticket;
 import com.example.bookmyshow.Service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TicketController {
-    @Autowired
+
+    @Autowired // create the dependency and inject inside controller
     private TicketService ticketService;
 
-    @GetMapping("/ticket/{id}")
-    public ResponseEntity getTicketById(@PathVariable("id") int ticketId){
-        Ticket savedTicket = ticketService.getTicketById(ticketId);
-        return ResponseEntity.ok(savedTicket);
+    @PostMapping("/ticket")
+    public ResponseEntity bookTicket(@RequestBody BookTicketRequestDTO bookTicketRequestDTO) throws Exception {
+        //validate ticket request dto
+        return ResponseEntity.ok(
+                ticketService.bookTicket(bookTicketRequestDTO.getShowSeatIds(), bookTicketRequestDTO.getUserId())
+        );
     }
 
-    @PostMapping("/ticket")
-    public ResponseEntity bookticket(@RequestBody BookTicketRequestDTO bookTicketRequestDTO) throws Exception {
-        Ticket savedTicket = ticketService.bookTicket(
-                bookTicketRequestDTO.getShowSeatNumbers(),
-                bookTicketRequestDTO.getUserId()
-        );
-        return ResponseEntity.ok(savedTicket);
+    @GetMapping("/hello")
+    public ResponseEntity greet(){
+        String greet = ticketService.greet();
+        return ResponseEntity.ok(greet);
     }
 }

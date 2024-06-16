@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class BookTicketRequestDTO {
-    private List<Integer> showSeatNumbers;
+    private List<Integer> showSeatIds;
     private Integer userId;
 }

@@ -14,12 +14,13 @@ public class TheatreController {
     private TheatreService theatreService;
 
     @PostMapping("/theatre")
-    public ResponseEntity createTheatre(@RequestBody TheatreRequestDTO theatreRequestDTO) {
-        return ResponseEntity.ok(theatreService.saveTheatre(
-                theatreRequestDTO.getTheatreName(),
-                theatreRequestDTO.getAddress(),
-                theatreRequestDTO.getCityId()
-            )
+    public ResponseEntity createTheatre(@RequestBody TheatreRequestDTO theatreRequestDTO){
+        return ResponseEntity.ok(
+                theatreService.saveTheatre(
+                        theatreRequestDTO.getName(),
+                        theatreRequestDTO.getAddress(),
+                        theatreRequestDTO.getCityId()
+                )
         );
     }
 }

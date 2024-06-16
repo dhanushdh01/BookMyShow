@@ -1,26 +1,27 @@
 package com.example.bookmyshow.Models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-public class Theatre extends BaseModel {
+@Entity
+public class Theatre extends BaseModel{
     private String name;
     private String address;
-    private City city;
 
     public Theatre() {
     }
 
-    public Theatre(String name, String address, City city) {
+    public Theatre(String name, String address) {
         this.name = name;
         this.address = address;
-        this.city = city;
     }
+
+    @OneToMany
     private List<Auditorium> auditoriums;
 }

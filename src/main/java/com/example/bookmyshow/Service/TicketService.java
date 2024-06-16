@@ -12,10 +12,11 @@ import java.util.List;
 
 @Service
 public class TicketService {
+
     @Autowired
     private ShowSeatService showSeatService;
 
-    public Ticket bookTicket(List<Integer> showSeatIds,int userId) throws Exception {
+    public Ticket bookTicket(List<Integer> showSeatIds, int userId) throws Exception {
         checkAndLockSeats(showSeatIds);
         startPayment(showSeatIds);
         return new Ticket();
@@ -23,28 +24,27 @@ public class TicketService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void checkAndLockSeats(List<Integer> showSeatIds) throws Exception {
-        for(int showSeatId:showSeatIds){
-            ShowSeat showSeat = showSeatService.getShowSeatById(showSeatId);
-            if(!showSeat.getShowSeatStatus().equals(ShowSeatStatus.AVAILABLE)) {
-                throw new Exception("Seat is not available");
+        // checking if the selected seats are available
+        for(int showSeatId : showSeatIds){
+            ShowSeat seat = showSeatService.getShowSeat(showSeatId);
+            if(!seat.getShowSeatStatus().equals(ShowSeatStatus.AVAILABLE)){
+                throw new Exception("Seat is not available anymore");
             }
         }
-        // Updating the seats to be locked
-        for(int showSeatId:showSeatIds){
-            ShowSeat showSeat = showSeatService.getShowSeatById(showSeatId);
-            showSeat.setShowSeatStatus(ShowSeatStatus.LOCKED);
-            showSeatService.saveShowSeat(showSeat);
+        // updating the seats to a locked state
+        for(int showSeatId : showSeatIds){
+            ShowSeat seat = showSeatService.getShowSeat(showSeatId);
+            seat.setShowSeatStatus(ShowSeatStatus.LOCKED);
+            showSeatService.saveShowSeat(seat);
         }
     }
 
     public boolean startPayment(List<Integer> showSeatIds){
-        // Payment Gateway Logic
         return true;
     }
 
-    public Ticket getTicketById(int ticketId){
-        // Fetch Ticket from DB
-        return new Ticket();
-    }
 
+    public String greet(){
+        return "HELLOWORLD";
+    }
 }

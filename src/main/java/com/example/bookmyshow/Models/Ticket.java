@@ -1,22 +1,29 @@
 package com.example.bookmyshow.Models;
 
 import com.example.bookmyshow.Models.Constant.TicketStatus;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-public class Ticket extends BaseModel {
-    private LocalDateTime bookingTime;
-    private double totalPrice;
-    private Show show;
-    private User user;
-    private Payment payment;
+@Entity
+public class Ticket extends BaseModel{
+    private LocalDateTime timeOfBooking;
+    private double totalAmount;
+    @OneToMany
     private List<ShowSeat> showSeats;
+    @ManyToOne
+    private Show show;
+    @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
 }
+/*
+            Ticket      Show
+            1             1
+            M             1
+
+ */

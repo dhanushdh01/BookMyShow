@@ -12,22 +12,23 @@ import java.util.List;
 public class TheatreService {
     @Autowired
     private TheatreRepository theatreRepository;
-
     @Autowired
     private CityService cityService;
 
-    public Theatre saveTheatre(String theatreName,String address ,int cityId){
+    public Theatre saveTheatre(String name, String address, int cityId){
         Theatre theatre = new Theatre();
-        theatre.setName(theatreName);
+        theatre.setName(name);
         theatre.setAddress(address);
-        theatre.setCity(cityService.getByCityId(cityId));
         Theatre savedTheatre = theatreRepository.save(theatre);
 
-        City city = cityService.getByCityId(cityId);
+        City city = cityService.getCityById(cityId);
         List<Theatre> theatres = city.getTheatres();
         theatres.add(savedTheatre);
         city.setTheatres(theatres);
         cityService.saveCity(city);
+
         return savedTheatre;
     }
+
+
 }

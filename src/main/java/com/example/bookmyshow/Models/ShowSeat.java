@@ -2,16 +2,22 @@ package com.example.bookmyshow.Models;
 
 import com.example.bookmyshow.Models.Constant.ShowSeatStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@Entity
 public class ShowSeat extends BaseModel {
     private int price;
+    @ManyToOne
     private Show show;
+    @ManyToOne
     private Seat seat;
+    @Enumerated(EnumType.STRING)
     private ShowSeatStatus showSeatStatus;
 
     public ShowSeat() {
@@ -24,3 +30,10 @@ public class ShowSeat extends BaseModel {
         this.showSeatStatus = showSeatStatus;
     }
 }
+/*
+        Show        ShowSeat
+        1               M
+
+        Seat        ShowSeat
+          1             M
+ */

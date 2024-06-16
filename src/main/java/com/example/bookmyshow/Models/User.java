@@ -1,19 +1,23 @@
 package com.example.bookmyshow.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Entity(name = "BMS_USER")
 @Getter
 @Setter
-public class User extends BaseModel {
+@Entity(name = "BMS_USER")
+public class User extends BaseModel{
     private String name;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
-    private String mobileNumber;
+    @OneToMany
     private List<Ticket> tickets;
 }
-

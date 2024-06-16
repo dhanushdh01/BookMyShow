@@ -2,7 +2,6 @@ package com.example.bookmyshow.Controller;
 
 import com.example.bookmyshow.DTO.UserLoginRequestDTO;
 import com.example.bookmyshow.DTO.UserSignUpRequestDTO;
-import com.example.bookmyshow.Models.User;
 import com.example.bookmyshow.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,21 +15,18 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity signUp(@RequestBody UserSignUpRequestDTO requestDTO) throws Exception {
-        User savedUser = userService.signUp(
-                requestDTO.getName(),
-                requestDTO.getEmail(),
-                requestDTO.getPassword()
+    public ResponseEntity signUp(@RequestBody UserSignUpRequestDTO requestDto) throws Exception {
+        //validate the userdata
+        return ResponseEntity.ok(
+                userService.signUp(requestDto.getName(), requestDto.getEmail(), requestDto.getPassword())
         );
-        return ResponseEntity.ok(savedUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserLoginRequestDTO requestDTO) throws Exception {
-        User savedUser = userService.login(
-                requestDTO.getEmail(),
-                requestDTO.getPassword()
+    public ResponseEntity login(@RequestBody UserLoginRequestDTO requestDto) throws Exception {
+        //validate the userdata
+        return ResponseEntity.ok(
+                userService.login( requestDto.getEmail(), requestDto.getPassword())
         );
-        return ResponseEntity.ok(savedUser);
     }
 }

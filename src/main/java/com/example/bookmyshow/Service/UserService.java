@@ -8,35 +8,38 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
     public User login(String email, String password) throws Exception {
-        User user = userRepository.findByUserEmail(email);
-        if(user == null){
-            throw new Exception("User not found with this Mail ID");
+        User savedUser = userRepository.findUserByEmail(email);
+        if(savedUser == null){
+            throw new Exception("User with email does not exist");
         }
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if(!bCryptPasswordEncoder.matches(password,user.getPassword())){
-            throw new Exception("Invalid Password");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if(encoder.matches(password, savedUser.getPassword())){
+            return savedUser;
         }
-        return user;
+        throw new Exception("Invalid password");
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public User signUp(String name,String email,String password) throws Exception {
-        User savedUser = userRepository.findByUserEmail(email);
+    public User signUp(String name, String email, String password) throws Exception {
+        User savedUser = userRepository.findUserByEmail(email);
         if(savedUser != null){
-            throw new Exception("User already exists with this Mail ID");
+            throw new Exception("User with same email exists");
         }
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(bCryptPasswordEncoder.encode(password));
-        user.setTickets(null);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(password));
+        user.setTickets(new ArrayList<>());
         return userRepository.save(user);
     }
 }
