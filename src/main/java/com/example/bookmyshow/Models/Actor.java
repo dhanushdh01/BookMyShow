@@ -15,4 +15,8 @@ public class Actor extends BaseModel{
     private String name;
     @ManyToMany
     private List<Movie> movies;
+
+    public Actor(String actorTwo) {
+        super();
+    }
 }

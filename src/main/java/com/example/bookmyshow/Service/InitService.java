@@ -1,16 +1,15 @@
 package com.example.bookmyshow.Service;
 
 import com.example.bookmyshow.Models.*;
-import com.example.bookmyshow.Models.Constant.AuditoriumFeature;
-import com.example.bookmyshow.Models.Constant.SeatStatus;
-import com.example.bookmyshow.Models.Constant.SeatType;
-import com.example.bookmyshow.Models.Constant.ShowSeatStatus;
+import com.example.bookmyshow.Models.Constant.*;
 import com.example.bookmyshow.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -78,7 +77,27 @@ public class InitService {
         savedTheatre.setAuditoriums(auditoriums);
         theatreRepository.save(savedTheatre);
 
-        Movie movie = new Movie("Titanic", "best movie ever");
+        // Create some example actors
+        Actor actor1 = new Actor("Actor One");
+        Actor actor2 = new Actor("Actor Two");
+
+        // Create a list of actors
+        List<Actor> actors = List.of(new Actor[]{actor1, actor2});
+
+        // Create a list of movie features
+        List<MovieFeature> features = Arrays.asList(MovieFeature.IMAX, MovieFeature.THREE_D);
+
+        Movie movie = new Movie(
+                "Movie Title",
+                "This is a description of the movie.",
+                LocalDate.of(2023, 12, 25),
+                120, // duration in minutes
+                "English",
+                "Action",
+                8.5, // rating
+                actors,
+                features
+        );
         movieRepository.save(movie);
 
         Show show = new Show();
